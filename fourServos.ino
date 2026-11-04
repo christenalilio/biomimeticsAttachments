@@ -60,5 +60,10 @@ void loop()
   
   delay(10);
 
+  Serial.print("1 - V: "); Serial.print(voltage1); Serial.print("V, Angle: "); Serial.print(angle1);
+  Serial.print(" | 2 - V: "); Serial.print(voltage2); Serial.print("V, Angle: "); Serial.print(angle2);
+  Serial.print(" | 3 - V: "); Serial.print(voltage3); Serial.print("V, Angle: "); Serial.print(angle3);
+  Serial.print(" | 4 - V: "); Serial.print(voltage4); Serial.print("V, Angle: "); Serial.println(angle4);
+
 }
 }
