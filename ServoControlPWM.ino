@@ -26,7 +26,7 @@ const int maxPulse_us = 2500;
 
 float curAngle1 = 90, curAngle2 = 90, curAngle3 = 90, curAngle4 = 90;
 
-void moveServo(Servo &s, float targetDeg, float ¤tDeg, float durationMs) {
+void moveServo(Servo &s, float targetDeg, float currentDeg, float durationMs) {
   if (abs(targetDeg - currentDeg) <= 2.0f) return; // ignore tiny noise shifts
 
   const float steps = 50.0f;
