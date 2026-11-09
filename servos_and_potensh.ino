@@ -3,6 +3,7 @@
 // C++ code
 // Rotimi
 
+
 #include <Servo.h>
 
 // Potentiometer pins
@@ -40,83 +41,82 @@ int potVal2;
 int potVal3;
 int potVal4;
 
-void setup()
-{
+void setup() {
   Serial.begin(9600);
-  
+
   servo1.attach(servoPin1);
   servo2.attach(servoPin2);
   servo3.attach(servoPin3);
   servo4.attach(servoPin4);
-  
+
   pinMode(led1, OUTPUT);
   pinMode(led2, OUTPUT);
   pinMode(led3, OUTPUT);
-  
 }
 
-float readBatteryV()
-{
+float readBatteryV() {
   int reading = analogRead(voltagePin);
-    float voltageOut = reading * (5.0 / 1023.0);
-    float voltageIn = voltageOut * ((R1+R2)/ R2);
+  float voltageOut = reading * (5.0 / 1023.0);
+  float voltageIn = voltageOut * ((R1 + R2) / R2);
 
-    return voltageIn;
+  return voltageIn;
 }
 
-void updateLEDS (float voltageIn)
-{
-  if (voltageIn >= 6.0)
-    {
-      digitalWrite(led1, HIGH);
-      digitalWrite(led2, HIGH);
-        digitalWrite(led3, HIGH); 
-    } 
-    else if (voltageIn >= 4.8)
-    {   digitalWrite(led1, LOW);
-      digitalWrite(led2, HIGH);
-        digitalWrite(led3, HIGH); 
-    }
-    else if (voltageIn >= 4.5)
-    {
-      digitalWrite(led1, LOW);
-      digitalWrite(led2, LOW);
-        digitalWrite(led3, HIGH); 
-    }
-  else 
-  {
-        digitalWrite(led1, LOW);
-      digitalWrite(led2, LOW);
-        digitalWrite(led3, LOW); 
+void updateLEDS(float voltageIn) {
+  if (voltageIn >= 6.0) {
+    digitalWrite(led1, HIGH);
+    digitalWrite(led2, HIGH);
+    digitalWrite(led3, HIGH);
+  } else if (voltageIn >= 4.8) {
+    digitalWrite(led1, LOW);
+    digitalWrite(led2, HIGH);
+    digitalWrite(led3, HIGH);
+  } else if (voltageIn >= 4.5) {
+    digitalWrite(led1, LOW);
+    digitalWrite(led2, LOW);
+    digitalWrite(led3, HIGH);
+  } else {
+    digitalWrite(led1, LOW);
+    digitalWrite(led2, LOW);
+    digitalWrite(led3, LOW);
   }
 }
 
 void loop()
-  
+
 {
   float voltageIn = readBatteryV();
-  updateLEDS (voltageIn);
-                               
+  updateLEDS(voltageIn);
+
   // Read value from potentiometer
   potVal1 = analogRead(potPin1);
   potVal2 = analogRead(potPin2);
   potVal3 = analogRead(potPin3);
   potVal4 = analogRead(potPin4);
-  
+
   // Map value from potentiometer to an equivalent angle
   int angle1 = map(potVal1, 0, 1023, 0, 180);
   int angle2 = map(potVal2, 0, 1023, 0, 180);
   int angle3 = map(potVal3, 0, 1023, 0, 180);
   int angle4 = map(potVal4, 0, 1023, 0, 180);
-  
+
   // Wrote to servo
   servo1.write(angle1);
   servo2.write(angle2);
   servo3.write(angle3);
   servo4.write(angle4);
 
+  Serial.print("Angle1: ");
+  Serial.print(angle1);
+  Serial.print(" | Angle2: ");
+  Serial.print(angle2);
+  Serial.print(" | Angle3: ");
+  Serial.print(angle3);
+  Serial.print(" | Angle4: ");
+  Serial.print(angle4);
+  Serial.println(" | VoltageIn: ");
   Serial.println(voltageIn);
-  
+
+
   delay(250);
 }
-
