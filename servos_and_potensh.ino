@@ -114,7 +114,7 @@ void loop()
   Serial.print(angle3);
   Serial.print(" | Angle4: ");
   Serial.print(angle4);
-  Serial.println(" | VoltageIn: ");
+  Serial.print(" | VoltageIn: ");
   Serial.println(voltageIn);
 
 
