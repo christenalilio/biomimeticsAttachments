@@ -1,4 +1,4 @@
-// Controls the 4 servos using potentiometers and mapping it to degrees
+// Controls the 4 servos using potentiometers and mapping it to radians
 
 // C++ code
 // Rotimi
@@ -24,22 +24,23 @@ Servo servo1, servo2, servo3, servo4;
 const int minPulse_us = 500;
 const int maxPulse_us = 2500;
 
-float curAngle1 = 90, curAngle2 = 90, curAngle3 = 90, curAngle4 = 90;
+const float pi = 3.14159;
 
-void moveServo(Servo &s, float targetDeg, float currentDeg, float durationMs) {
-  if (abs(targetDeg - currentDeg) <= 2.0f) return; // ignore tiny noise shifts
+float curAngle1 = pi/2, curAngle2 = pi/2, curAngle3 = pi/2, curAngle4 = pi/2;
 
-  const float steps = 50.0f;
-  float delta = (targetDeg - currentDeg) / steps;
+void moveServo(Servo &s, float targetRad, float currentRad, float durationMs) {
+  if (abs(targetRad - currentRad) <= ((2.0/360.0)*2*pi)) return; // ignore tiny noise shifts (2 degrees allowance)
+
+  const float steps = 50.0f; //50 steps reduce jerkiness can be changed
+  float delta = ((targetRad - currentRad)*2*pi) / steps;
   float delayMs = durationMs / steps;
 
   for (int i = 0; i <= steps; i++) {
-    float nextDeg = currentDeg + delta * i;
-    long us = minPulse_us + (long)((maxPulse_us - minPulse_us) * (nextDeg / 180.0f));
+    float nextRad = currentRad + delta * i;
+    long us = minPulse_us + (long)((maxPulse_us - minPulse_us) * (nextRad / 180.0f));
     s.writeMicroseconds(us);
     delay((int)delayMs);
   }
-  currentDeg = targetDeg;
 }
 
 void setup() {
