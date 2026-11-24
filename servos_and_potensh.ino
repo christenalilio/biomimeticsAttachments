@@ -1,7 +1,6 @@
 
-
-// C++ code
-// Rotimi
+// Functional code for MK1 - Controls servos using potentiometers via discretised inputs and Servo.h Library
+// Authors - Bio-mimetics 2026 
 
 
 #include <Servo.h>
